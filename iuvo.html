@@ -185,12 +185,88 @@
 	.main {
 		position:absolute;
 		left:240px;
-		width:100%;
-		height:100%;
+		top:0;
+		bottom:0;
+		right:0;
+		background-color:#fff;
 		background-image:url(images/iuvo/front-background.jpg);
 		background-repeat:no-repeat;
 		background-position:center center;
-		background-size:100% 100%;
+		background-size:cover;
+	}
+	
+	.main .slogan {
+		position:absolute;
+		bottom:160px;
+		width:100%;
+		text-align:center;
+		font-size:66px;
+		color:#fff;
+	}
+	
+	.main .slogan span {
+		display:block;
+		font-size:30px;
+	}
+	
+	a.btn-slice {
+		display:block;
+		width:180px;
+		height:50px;
+		border:2px solid rgba(255, 255, 255, 0.8);
+		text-align:center;
+		line-height:50px;
+		text-transform:uppercase;
+		font-size:20px;
+		font-weight:600;
+		color:#2ECC71;
+	}
+	
+	a.btn-slice:hover {
+		cursor:pointer;
+	}
+	
+	.btn-slice .line {
+		display:block;
+		background-color:rgba(255, 255, 255, 0.8);
+		position:absolute;
+		-webkit-transition:left 0.4s, right 0.4s, top 0.4s, bottom 0.4s, width 0.4s, height 0.4s;
+	}
+	
+	.btn-slice .line-top {
+		left:-110%;
+		top:-2px;
+		width:0;
+		height:2px;
+	}
+	
+	.btn-slice .line-bottom {
+		right:-110%;
+		bottom:-2px;
+		width:0;
+		height:2px;
+	}
+	
+	.btn-slice .line-left {
+		bottom:-110%;
+		left:-2px;
+		width:2px;
+		height:0;
+	}
+	
+	.btn-slice .line-right {
+		top:-110%;
+		right:-2px;
+		width:2px;
+		height:0;
+	}
+	
+	.test-pos {
+		position:absolute;
+		top:50%;
+		left:50%;
+		margin-left:-90px;
+		margin-top:-25px;
 	}
 </style>
 </head>
@@ -226,7 +302,22 @@
 		</div>
 		<div class="footer">Copied by Xiaofo, 2015-7-9</div>
 	</div>
-	<div class="main"></div>
+	<div class="main">
+		<div class="bubble bubble-top">My mission is clear</div>
+		<a class="btn-slice test-pos">
+			<span class="line line-top"></span>
+			<span class="line line-bottom"></span>
+			<span class="line line-left"></span>
+			<span class="line line-right"></span>
+			Mission
+		</a>
+		<!-- 
+		<div class="slogan">
+			Imagine, create, enjoy.
+			<span>Let me show you how.</span>
+		</div>
+		-->
+	</div>
 </body>
 <script src="js/jquery.js"></script>
 <script>
@@ -250,7 +341,8 @@
 			$(element).css("top", top + "px");
 			$(element).attr("data-outtop", top);
 		});
-		$(".menu .button, .logo").mouseover(function(e) {
+		
+		$(".menu .button, .logo, .btn-slice").mouseover(function(e) {
 			var button = $(this);
 			button.find("span").css("color", "#fff");
 			button.find(".icon").css("background-position-x", "80%");
@@ -259,7 +351,8 @@
 			bubble.css("opacity", "1.0");
 			bubble.css("top", bubble.data("overtop") + "px");
 		});
-		$(".menu .button, .logo").mouseout(function(e) {
+		
+		$(".menu .button, .logo, .btn-slice").mouseout(function(e) {
 			var button = $(this);
 			button.find("span").css("color", "#7B7B7B");
 			button.find(".icon").css("background-position-x", "50%");
@@ -267,6 +360,38 @@
 			bubble.css("z-index", "-1070");
 			bubble.css("opacity", "0");
 			bubble.css("top", bubble.data("outtop") + "px");
+		});
+		
+		$(".btn-slice").mouseover(function(e) {
+			var btn = $(this);
+			var lineTop = btn.find(".line-top");
+			lineTop.css("left", "0");
+			lineTop.css("width", "180px");
+			var lineBottom = btn.find(".line-bottom");
+			lineBottom.css("right", "0");
+			lineBottom.css("width", "180px");
+			var lineLeft = btn.find(".line-left");
+			lineLeft.css("bottom", "0");
+			lineLeft.css("height", "50px");
+			var lineRight = btn.find(".line-right");
+			lineRight.css("top", "0");
+			lineRight.css("height", "50px");
+		});
+		
+		$(".btn-slice").mouseout(function(e) {
+			var btn = $(this);
+			var lineTop = btn.find(".line-top");
+			lineTop.css("left", "-110%");
+			lineTop.css("width", "0");
+			var lineBottom = btn.find(".line-bottom");
+			lineBottom.css("right", "-110%");
+			lineBottom.css("width", "0");
+			var lineLeft = btn.find(".line-left");
+			lineLeft.css("bottom", "-110%");
+			lineLeft.css("height", "0");
+			var lineRight = btn.find(".line-right");
+			lineRight.css("top", "-110%");
+			lineRight.css("height", "0");
 		});
 	}
 </script>
