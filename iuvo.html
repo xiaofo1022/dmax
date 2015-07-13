@@ -16,6 +16,7 @@
 		margin:0;
 		width:100%;
 		height:100%;
+		overflow-x:hidden;
 	}
 	
 	.clearfix:after { 
@@ -73,13 +74,15 @@
 	}
 	
 	.sidebar .icon {
+		display:block;
 		width:80px;
 		height:100%;
 		float:left;
+		background-size:40px 29px;
 		background-repeat:no-repeat;
-		background-position-x:50%;
-		background-position-y:50%;
+		background-position:center center;
 		transition:background-position-x 0.3s;
+		-moz-transition:background-position-x 0.3s;
 		-webkit-transition:background-position-x 0.3s;
 	}
 	
@@ -124,7 +127,6 @@
 	.bubble {
 		position:absolute;
 		left:50%;
-		z-index:-1070;
 		color:#fff;
 		padding:10px;
 		margin-top:-30px;
@@ -193,24 +195,27 @@
 		background-repeat:no-repeat;
 		background-position:center center;
 		background-size:cover;
+		overflow-x:hidden;
 	}
 	
 	.main .slogan {
-		position:absolute;
-		bottom:160px;
 		width:100%;
 		text-align:center;
 		font-size:66px;
 		color:#fff;
 	}
 	
-	.main .slogan span {
-		display:block;
+	.main .slogan:hover {
+		cursor:pointer;
+	}
+	
+	.main .slogan .tip {
 		font-size:30px;
 	}
 	
 	a.btn-slice {
 		display:block;
+		position:relative;
 		width:180px;
 		height:50px;
 		border:2px solid rgba(255, 255, 255, 0.8);
@@ -231,6 +236,7 @@
 		background-color:rgba(255, 255, 255, 0.8);
 		position:absolute;
 		-webkit-transition:left 0.4s, right 0.4s, top 0.4s, bottom 0.4s, width 0.4s, height 0.4s;
+		-moz-transition:left 0.4s, right 0.4s, top 0.4s, bottom 0.4s, width 0.4s, height 0.4s;
 	}
 	
 	.btn-slice .line-top {
@@ -261,39 +267,68 @@
 		height:0;
 	}
 	
-	.test-pos {
+	.main .page {
 		position:absolute;
 		top:50%;
-		left:50%;
-		margin-left:-90px;
-		margin-top:-25px;
+		margin-top:-180px;
+		width:100%;
+		text-align:center;
+	}
+	
+	.main .control {
+		position:relative;
+		display:inline-block;
+		margin:0 60px;
+		margin-bottom:40px;
+	}
+	
+	.control .icon {
+		position:relative;
+		width:180px;
+		height:110px;
+		margin:20px 0;
+		background-size:180px 110px;
+		background-repeat:no-repeat;
+		background-position:center center;
+	}
+	
+	.control .console {
+		background-image:url(svg/icon-console.svg);
+	}
+	
+	.control .rocket {
+		background-image:url(svg/icon-rocket.svg);
+	}
+	
+	.control .location {
+		background-image:url(svg/icon-location.svg);
+	}
+	
+	.center {
+		text-align:center;
 	}
 </style>
 </head>
 <body>
 	<div class="sidebar">
-		<div class="bubble bubble-bottom">Fucking stupid shit</div>
-		<div class="logo"></div>
+		<div class="logo" data-tip="Fucking stupid shit" data-tip-pos="bottom"></div>
 		<div class="menu">
-			<div class="bubble bubble-top">My mission is clear</div>
-			<div class="button clearfix">
-				<div class="icon console"></div>
+			<div class="button clearfix" data-tip="My mission is clear" data-tip-pos="top">
+				<span class="icon console"></span>
 				<div class="bar">
 					Mission
 					<span>Know what I'm up to</span>
 				</div>
 			</div>
-			<div class="bubble bubble-top">This is my playground</div>
-			<div class="button clearfix">
-				<div class="icon rocket"></div>
+			<div class="button clearfix" data-tip="This is my playground" data-tip-pos="top">
+				<span class="icon rocket"></span>
 				<div class="bar">
 					Play
 					<span>See what I like to do</span>
 				</div>
 			</div>
-			<div class="bubble bubble-top">Let's touch together</div>
-			<div class="button clearfix">
-				<div class="icon location"></div>
+			<div class="button clearfix" data-tip="Let's touch together" data-tip-pos="top">
+				<span class="icon location"></span>
 				<div class="bar">
 					Touch
 					<span>How to get in touch</span>
@@ -303,20 +338,42 @@
 		<div class="footer">Copied by Xiaofo, 2015-7-9</div>
 	</div>
 	<div class="main">
-		<div class="bubble bubble-top">My mission is clear</div>
-		<a class="btn-slice test-pos">
-			<span class="line line-top"></span>
-			<span class="line line-bottom"></span>
-			<span class="line line-left"></span>
-			<span class="line line-right"></span>
-			Mission
-		</a>
-		<!-- 
-		<div class="slogan">
-			Imagine, create, enjoy.
-			<span>Let me show you how.</span>
+		<div class="page">
+			<div class="control">
+				<div class="icon console"></div>
+				<a class="btn-slice" data-tip="Let's touch together" data-tip-pos="top">
+					<span class="line line-top"></span>
+					<span class="line line-bottom"></span>
+					<span class="line line-left"></span>
+					<span class="line line-right"></span>
+					Mission
+				</a>
+			</div>
+			<div class="control">
+				<div class="icon rocket"></div>
+				<a class="btn-slice" data-tip="Let's touch together" data-tip-pos="top">
+					<span class="line line-top"></span>
+					<span class="line line-bottom"></span>
+					<span class="line line-left"></span>
+					<span class="line line-right"></span>
+					Play
+				</a>
+			</div>
+			<div class="control">
+				<div class="icon location"></div>
+				<a class="btn-slice" data-tip="Let's touch together" data-tip-pos="top">
+					<span class="line line-top"></span>
+					<span class="line line-bottom"></span>
+					<span class="line line-left"></span>
+					<span class="line line-right"></span>
+					Touch
+				</a>
+			</div>
+			<div class="slogan" data-tip="Let's Fuck" data-tip-pos="top">
+				Imagine, create, enjoy.
+				<div class="tip">Let me show you how.</div>
+			</div>
 		</div>
-		-->
 	</div>
 </body>
 <script src="js/jquery.js"></script>
@@ -326,38 +383,23 @@
 	var bubbleHtml = "<div class='bubble'></div>";
 	
 	function init() {
-		$(".bubble").each(function(index, element) {
-			var button = $(element).next();
-			var offsetTop = button[0].offsetTop;
-			var isBottom = $(element).hasClass("bubble-bottom");
-			var top = 0;
-			if (isBottom) {
-				top = offsetTop + 140;
-				$(element).attr("data-overtop", top - 30);
-			} else {
-				top = offsetTop - 50;
-				$(element).attr("data-overtop", top + 30);
-			}
-			$(element).css("top", top + "px");
-			$(element).attr("data-outtop", top);
-		});
-		
-		$(".menu .button, .logo, .btn-slice").mouseover(function(e) {
+		$("[data-tip]").mouseenter(function(e) {
 			var button = $(this);
 			button.find("span").css("color", "#fff");
 			button.find(".icon").css("background-position-x", "80%");
-			var bubble = button.prev();
-			bubble.css("z-index", "1070");
-			bubble.css("opacity", "1.0");
+			
+			var bubble = getBubble(button);
+			bubble.css("top");
+			bubble.css("opacity", "1.0");;
 			bubble.css("top", bubble.data("overtop") + "px");
 		});
 		
-		$(".menu .button, .logo, .btn-slice").mouseout(function(e) {
+		$("[data-tip]").mouseleave(function(e) {
 			var button = $(this);
 			button.find("span").css("color", "#7B7B7B");
 			button.find(".icon").css("background-position-x", "50%");
+			
 			var bubble = button.prev();
-			bubble.css("z-index", "-1070");
 			bubble.css("opacity", "0");
 			bubble.css("top", bubble.data("outtop") + "px");
 		});
@@ -393,6 +435,33 @@
 			lineRight.css("top", "-110%");
 			lineRight.css("height", "0");
 		});
+	}
+	
+	function getBubble(button) {
+		var tip = button.data("tip");
+		var pos = button.data("tip-pos");
+		var bubble = $(bubbleHtml);
+		bubble.text(tip);
+		button.before(bubble);
+		var offsetTop = button[0].offsetTop;
+		var top = 0;
+		if (pos == "top") {
+			top = offsetTop - 50;
+			bubble.attr("data-overtop", top + 30);
+			bubble.addClass("bubble-top");
+		} else if (pos == "bottom") {
+			top = offsetTop + 140;
+			bubble.attr("data-overtop", top - 30);
+			bubble.addClass("bubble-bottom");
+		}
+		bubble.css("top", top + "px");
+		bubble.attr("data-outtop", top);
+		bubble.bind("webkitTransitionEnd", function(e) {
+			if ($(this).css("top") == ($(this).attr("data-outtop") + "px")) {
+				$(this).remove();
+			}
+		});
+		return bubble;
 	}
 </script>
 </html>
