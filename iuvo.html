@@ -126,11 +126,9 @@
 	
 	.bubble {
 		position:absolute;
-		left:50%;
 		color:#fff;
 		padding:10px;
 		margin-top:-30px;
-		margin-left:-80px;
 		background-color:rgba(46, 204, 113, 0.8);
 		opacity:0;
 		transition:opacity 0.4s, top 0.4s;
@@ -307,13 +305,27 @@
 	.center {
 		text-align:center;
 	}
-</style>
+	
+	.hidden {
+		display:none;
+	}
+	
+	.mission {
+		position:absolute;
+		left:240px;
+		top:0;
+		bottom:0;
+		right:0;
+		background-color:#fff;
+		overflow-x:hidden;
+	}
+	</style>
 </head>
 <body>
 	<div class="sidebar">
 		<div class="logo" data-tip="Fucking stupid shit" data-tip-pos="bottom"></div>
 		<div class="menu">
-			<div class="button clearfix" data-tip="My mission is clear" data-tip-pos="top">
+			<div class="button clearfix" data-tip="My mission is clear" data-tip-pos="top" onclick="hidePage()">
 				<span class="icon console"></span>
 				<div class="bar">
 					Mission
@@ -375,9 +387,15 @@
 			</div>
 		</div>
 	</div>
+	<div class="mission hidden">
+	</div>
 </body>
 <script src="js/jquery.js"></script>
 <script>
+	function hidePage() {
+		$(".main").addClass("glue-out");
+	}
+
 	init();
 	
 	var bubbleHtml = "<div class='bubble'></div>";
@@ -444,6 +462,8 @@
 		bubble.text(tip);
 		button.before(bubble);
 		var offsetTop = button[0].offsetTop;
+		var bubbleWidth = bubble.width();
+		var bubbleMarginLeft = -parseInt(bubbleWidth / 2) - 10;
 		var top = 0;
 		if (pos == "top") {
 			top = offsetTop - 50;
@@ -455,6 +475,8 @@
 			bubble.addClass("bubble-bottom");
 		}
 		bubble.css("top", top + "px");
+		bubble.css("left", "50%");
+		bubble.css("margin-left", bubbleMarginLeft + "px");
 		bubble.attr("data-outtop", top);
 		bubble.bind("webkitTransitionEnd", function(e) {
 			if ($(this).css("top") == ($(this).attr("data-outtop") + "px")) {
