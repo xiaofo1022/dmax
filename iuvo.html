@@ -216,17 +216,10 @@
 	}
 
 	.main {
-		position:absolute;
-		left:240px;
-		top:0;
-		bottom:0;
-		right:0;
-		background-color:#fff;
 		background-image:url(images/iuvo/front-background.jpg);
 		background-repeat:no-repeat;
 		background-position:center center;
 		background-size:cover;
-		overflow-x:hidden;
 	}
 	
 	.main .slogan {
@@ -347,7 +340,7 @@
 		border:1px solid #000;
 	}
 	
-	.mission {
+	.page-template {
 		position:absolute;
 		left:240px;
 		top:0;
@@ -355,22 +348,28 @@
 		right:0;
 		background-color:#fff;
 		overflow-x:hidden;
-		z-index:-1;
+		visibility:hidden;
 	}
 	
-	.mission .content {
+	.active {
+		visibility:visible;
+	}
+	
+	.mission {}
+	
+	.content {
 		padding:0 110px;
 	}
 	
-	.mission h2 {
+	header h2 {
 		color:#2ECC71;
-		font-size:52px;
+		font-size:62px;
 		font-weight:normal;
-		line-height:52px;
+		line-height:62px;
 		margin:77px 0 0 0;
 	}
 	
-	.mission h3 {
+	header h3 {
 		font-size:22px;
 		font-weight:600;
 		line-height:22px;
@@ -378,7 +377,7 @@
 		text-transform:uppercase;
 	}
 	
-	.mission .divline {
+	.divline {
 		display:block;
 		margin-top:20px;
 		border-bottom:1px solid #000;
@@ -431,15 +430,95 @@
 		color:#888;
 	}
 	
-	.play {
+	.play {}
+	
+	.play .block {
+		position:relative;
+		margin-top:2px;
+		height:265px;
+		background-color:#2ECC71;
+		padding: 0 110px;
+	}
+	
+	.play .info {
+		width:290px;
+		padding-top:10px;
+		float:left;
+	}
+	
+	.play .info h2 {
+		margin:20px 0 0 0;
+		font-weight:bold;
+		font-size:30px;
+		color:#fff;
+		text-transform:uppercase;
+	}
+	
+	.play .info a {
+		text-decoration:none;
+		color:#1C9750;
+		font-size:20px;
+	}
+	
+	.play .subinfo {
+		margin-top:10px;
+		font-size:18px;
+		color:#fff;
+	}
+	
+	.play .play-slice {
+		position:relative;
+		margin:20px 0;
+		display:inline-block;
+	}
+	
+	.play .image {
+		position:relative;
+		width:587px;
+		height:234px;
+		background-image:url(images/iuvo/imac-screen.png);
+		background-position:0px 0px;
+		background-repeat:no-repeat;
+		background-size:587px 234px;
+		float:right;
+		margin-top:31px;
+	}
+	
+	.play .image img {
 		position:absolute;
-		left:240px;
-		top:0;
 		bottom:0;
-		right:0;
-		overflow-x:hidden;
-		background-color:#fff;
-		z-index:-2;
+		right:16px;
+		width:520px;
+		height:216px;
+	}
+	
+	.image-mask {
+		position:absolute;
+		bottom:0;
+		right:16px;
+		width:520px;
+		height:216px;
+		background-color:#000;
+		opacity:0;
+		-webkit-transition:opacity 0.4s;
+	}
+	
+	.image-mask:hover {
+		cursor:pointer;
+		opacity:0.4;
+	}
+	
+	.svg-plus {
+		position:absolute;
+		left:50%;
+		top:-32px;
+		width:50px;
+		height:50px;
+		background-image:url(svg/icon-plus-filled.svg);
+		background-position:0 0;
+		background-repeat:no-repeat;
+		background-size:50px 50px;
+		-webkit-trasition:top 0.4s;
 	}
 </style>
 </head>
@@ -472,7 +551,7 @@
 		<div class="footer">Copied by Xiaofo, 2015-7-9</div>
 	</div>
 	
-	<div class="main">
+	<div class="main page-template active">
 		<div class="page">
 			<div class="control">
 				<div class="icon console"></div>
@@ -511,7 +590,7 @@
 		</div>
 	</div>
 	
-	<div class="mission">
+	<div class="mission page-template">
 		<div class="content">
 			<header>
 				<h2>My mission is clear</h2>
@@ -547,38 +626,72 @@
 		</div>
 	</div>
 	
-	<div>
+	<div class="play page-template">
+		<div class="content">
+			<header>
+				<h2>This is my playground</h2>
+				<h3>See what i like to do</h3>
+				<span class="divline" style="margin-bottom:77px;"></span>
+			</header>
+		</div>
+		<div class="block">
+			<div class="info">
+				<h2>Toyota hybrids, frontend</h2>
+				<a href="http://www.toyotahibrid.si" target="_blank">www.toyotahibrid.si</a>
+				<div class="subinfo">
+					Frontend development for Toyota's hybrids showcase page.
+				</div>
+				<div class="play-slice">
+					<a class="btn-slice" style="color:#fff;" data-tip="Fuck It!" data-tip-pos="top">
+						<span class="line line-top"></span>
+						<span class="line line-bottom"></span>
+						<span class="line line-left"></span>
+						<span class="line line-right"></span>
+						View It
+					</a>
+				</div>
+			</div>
+			<div class="image">
+				<image src="images/iuvo/toyota-models.jpg"/>
+				<div class="image-mask"></div>
+				<div class="svg-plus"></div>
+			</div>
+		</div>
+		<div class="block"></div>
+		<div class="block"></div>
+		<div class="block"></div>
 	</div>
 </body>
 <script src="js/jquery.js"></script>
 <script>
 	function showMission() {
 		clearAnimation();
-		$(".mission").addClass("move-in");
+		showAnimation(".mission");
 	}
 
 	function showMain() {
 		clearAnimation();
-		$(".main").addClass("move-in");
+		showAnimation(".main");
 	}
 	
 	function showPlay() {
 		clearAnimation();
-		$(".play").addClass("move-in");
+		showAnimation(".play");
+	}
+	
+	function showAnimation(className) {
+		$(className).addClass("active");
+		$(className).addClass("move-in");
 	}
 	
 	function clearAnimation() {
-		var showedDiv = $(".move-in");
-		if (showedDiv.length == 0) {
-			showedDiv = $(".main");
-		}
 		$(".glue-out").each(function(index, element) {
 			$(element).removeClass("glue-out");
 		});
 		$(".move-in").each(function(index, element) {
 			$(element).removeClass("move-in");
 		});
-		showedDiv.addClass("glue-out");
+		$(".active").addClass("glue-out");
 	}
 	
 	init();
@@ -586,6 +699,21 @@
 	var bubbleHtml = "<div class='bubble'></div>";
 	
 	function init() {
+		/*
+		$(".mask").mouseenter(function(e) {
+			var mask = $("<div class='image-mask'></div>");
+			var image = $(this);
+			image.after(mask);
+			mask.css("opacity", "0.5");
+		});
+		*/
+		
+		$(".page-template").bind("webkitAnimationEnd", function(e) {
+			if ($(this).hasClass("glue-out")) {
+				$(this).removeClass("active");
+			}
+		});
+	
 		$("[data-tip]").mouseenter(function(e) {
 			var button = $(this);
 			button.find("span").css("color", "#fff");
