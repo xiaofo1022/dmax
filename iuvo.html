@@ -5,11 +5,14 @@
 <title>Iuvo</title>
 <link href="fonts/ff-enzo-web.css" rel="stylesheet"/>
 <style>
+	* {
+		font-family: "ff-enzo-web", Helvetica, sans-serif;
+		font-weight: 600;
+	}
+	
 	html {
 		width:100%;
 		height:100%;
-		font-family: "ff-enzo-web", Helvetica, sans-serif;
-		font-weight: 600;
 	}
 
 	body {
@@ -252,7 +255,7 @@
 	}
 	
 	a.btn-slice {
-		display:block;
+		display:inline-block;
 		position:relative;
 		width:180px;
 		height:50px;
@@ -263,6 +266,9 @@
 		font-size:20px;
 		font-weight:600;
 		color:#2ECC71;
+		opacity:0.8;
+		box-sizing:border-box;
+		-webkit-transition:opacity 0.4s;
 	}
 	
 	a.btn-slice:hover {
@@ -588,6 +594,54 @@
 		animation-duration: 1s;
 		animation-iteration-count: infinite;
 	}
+	
+	.touch {
+		color:#fff;
+		background-image:url(images/iuvo/touch-background.jpg);
+		background-repeat:no-repeat;
+		background-position:center center;
+		background-size:cover;
+	}
+	
+	.touch .input-outer {
+		position:relative;
+		width:50%;
+		margin-top:20px;
+		float:left;
+		padding-right:20px;
+		box-sizing:border-box;
+	}
+	
+	.touch .input  {
+		width:100%;
+		height:80px;
+		border:2px solid rgba(255, 255, 255, 0.8);
+		color:rgba(255, 255, 255, 0.8);
+		background-color:rgba(0, 0, 0, 0.2);
+		font-size:30px;
+		font-weight:600;
+		padding-left:20px;
+		outline:none;
+		box-sizing:border-box;
+		text-align:left;
+	}
+	
+	.touch .input:focus {
+		color:#fff;
+		border:2px solid #fff;
+	}
+	
+	.touch .input:focus::-webkit-input-placeholder {
+		color:#fff;
+	}
+	
+	.touch .input[type="submit"] {
+		color:#2EC56E;
+	}
+	
+	.touch .input[type="submit"]:hover {
+		cursor:pointer;
+	}
 </style>
 </head>
 <body>
@@ -608,7 +662,7 @@
 					<span>See what I like to do</span>
 				</div>
 			</div>
-			<div class="button clearfix" data-tip="Let's touch together" data-tip-pos="top">
+			<div class="button clearfix" data-tip="Let's touch together" data-tip-pos="top" onclick="showTouch()">
 				<span class="icon location"></span>
 				<div class="bar">
 					Touch
@@ -804,6 +858,67 @@
 			<p>Get Me Back Up!</p>
 		</footer>
 	</div>
+	
+	<div class="touch page-template">
+		<div class="content">
+			<header>
+				<h2 style="color:#fff;">Let's do something together</h2>
+				<h3>How to get in touch</h3>
+				<span class="divline" style="margin-bottom:77px;border-color:#fff;"></span>
+			</header>
+			
+			<article class="clearfix">
+				<div class="input-outer">
+					<input class="input" type="text" placeholder="What should I call you?"/>
+				</div>
+				<div class="input-outer">
+					<input class="input" type="text" placeholder="How can I reach you?"/>
+				</div>
+				<div class="input-outer" style="width:100%;">
+					<textarea class="input" rows="5" placeholder="What would you like to know?" style="resize:none;height:184px;"></textarea>
+				</div>
+				<div class="input-outer">
+					<input class="input" type="submit" value="Fuck It!"/>
+				</div>
+			</article>
+			
+			<header>
+				<h2 style="color:#fff;">You can also reach me elsewhere</h2>
+				<h3>How to get in touch</h3>
+				<span class="divline" style="margin-bottom:22px;border-color:#fff;"></span>
+			</header>
+			
+			<article class="clearfix" style="margin-bottom:40px;">
+				<div class="input-outer" style="width:33%;">
+					<a class="btn-slice" style="width:100%;color:#fff;" data-tip="Fucking!" data-tip-pos="top">
+						<span class="line line-top"></span>
+						<span class="line line-bottom"></span>
+						<span class="line line-left"></span>
+						<span class="line line-right"></span>
+						Fucking
+					</a>
+				</div>
+				<div class="input-outer" style="width:33%;">
+					<a class="btn-slice" style="width:100%;color:#fff;" data-tip="Bull!" data-tip-pos="top">
+						<span class="line line-top"></span>
+						<span class="line line-bottom"></span>
+						<span class="line line-left"></span>
+						<span class="line line-right"></span>
+						Bull
+					</a>
+				</div>
+				<div class="input-outer" style="width:33%;">
+					<a class="btn-slice" style="width:100%;color:#fff;" data-tip="Shit!" data-tip-pos="top">
+						<span class="line line-top"></span>
+						<span class="line line-bottom"></span>
+						<span class="line line-left"></span>
+						<span class="line line-right"></span>
+						Shit
+					</a>
+				</div>
+			</article>
+		</div>
+	</div>
 </body>
 <script src="js/jquery.js"></script>
 <script>
@@ -822,6 +937,11 @@
 		showAnimation(".play");
 	}
 	
+	function showTouch() {
+		clearAnimation();
+		showAnimation(".touch");
+	}
+	
 	function showAnimation(className) {
 		$(className).addClass("active");
 		$(className).addClass("move-in");
@@ -837,11 +957,9 @@
 		$(".active").addClass("glue-out");
 	}
 	
-	init();
-	
 	var bubbleHtml = "<div class='bubble'></div>";
 	
-	function init() {
+	+function() {
 		$(".btn-up").click(function(e) {
 			$(".play").scrollTop(0);
 		});
@@ -878,6 +996,9 @@
 			var button = $(this);
 			button.find("span").css("color", "#fff");
 			button.find(".icon").css("background-position-x", "80%");
+			if (button.hasClass("btn-slice")) {
+				button.css("opacity", "1");
+			}
 			
 			var bubble = getBubble(button);
 			bubble.css("top");
@@ -889,26 +1010,33 @@
 			var button = $(this);
 			button.find("span").css("color", "#7B7B7B");
 			button.find(".icon").css("background-position-x", "50%");
+			if (button.hasClass("btn-slice")) {
+				button.css("opacity", "0.8");
+			}
 			
 			var bubble = button.prev();
 			bubble.css("opacity", "0");
 			bubble.css("top", bubble.data("outtop") + "px");
+			
+			if (button.parent().hasClass("menu")) {
+				bubble.css("z-index", "-1");
+			}
 		});
 		
 		$(".btn-slice").mouseover(function(e) {
 			var btn = $(this);
 			var lineTop = btn.find(".line-top");
 			lineTop.css("left", "0");
-			lineTop.css("width", "180px");
+			lineTop.css("width", "178px");
 			var lineBottom = btn.find(".line-bottom");
 			lineBottom.css("right", "0");
-			lineBottom.css("width", "180px");
+			lineBottom.css("width", "178px");
 			var lineLeft = btn.find(".line-left");
 			lineLeft.css("bottom", "0");
-			lineLeft.css("height", "50px");
+			lineLeft.css("height", "48px");
 			var lineRight = btn.find(".line-right");
 			lineRight.css("top", "0");
-			lineRight.css("height", "50px");
+			lineRight.css("height", "48px");
 		});
 		
 		$(".btn-slice").mouseout(function(e) {
@@ -926,7 +1054,7 @@
 			lineRight.css("top", "-110%");
 			lineRight.css("height", "0");
 		});
-	}
+	}();
 	
 	function getBubble(button) {
 		var tip = button.data("tip");
