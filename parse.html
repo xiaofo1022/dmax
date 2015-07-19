@@ -3,27 +3,124 @@
 <head>
 <meta charset="utf-8">
 <title>Parse</title>
-<link href="css/bootstrap.css" rel="stylesheet"/>
-<script src="js/jquery.js"></script>
-<script src="js/bootstrap.js"></script>
 <style>
-	.away {
-		position:absolute;
-		left:100px;
-		top:100px;
+	body {
+		padding-top:100px;
+	}
+
+	.border {
+		border:1px solid #000;
 	}
 	
-	.away:hover {
-		cursor:pointer;
+	.container {
+		margin-left:auto;
+		margin-right:auto;
+		display:flex;
+		width:300px;
+		height:360px;
+		flex-direction:column;
+		perspective:1200px;
+	}
+	
+	.row {
+		flex:1;
+		display:flex;
+		flex-direction:row;
+		margin:-1px;
+	}
+	
+	.app {
+		position:relative;
+		display:inline-block;
+		width:100px;
+		height:120px;
+		transform-style:preserve-3d;
+		backface-visibility:visible;
+		transition:all 0.8s;
+	}
+	
+	.app:hover {
+		transform-origin:50% 50% -50px;
+		transform:rotateY(-90deg);
+	}
+	
+	.app div {
+		position:absolute;
+		top:0;
+		left:0;
+		width:100%;
+		height:100%;
+		text-align:center;
+		padding-top:50px;
+		box-sizing:border-box;
+		transition:all 0.8s;
+	}
+	
+	.app-front {
+	}
+	
+	.app-back {
+		transform:translateZ(-100px);
+	}
+	
+	.app-right {
+		background-color:rgba(0, 0, 0, 0.6);
+		color:#fff;
+		transform-origin:right center;
+		transform:rotateY(270deg);
+	}
+	
+	.app-top {
+		background-color:rgba(0, 0, 0, 0.6);
+		color:#fff;
+		transform-origin:50% 0%;
+		transform:rotateX(270deg);
+	}
+	
+	.app-bottom {
+		background-color:rgba(0, 0, 0, 0.6);
+		color:#fff;
+		transform-origin:50% 100%;
+		transform:rotateX(90deg);
+	}
+	
+	.app-left {
+		background-color:rgba(0, 0, 0, 0.6);
+		color:#fff;
+		transform-origin:left center;
+		transform:rotateY(90deg);
+	}
+	
+	.parent {
+		display:flex;
+		flex-direction:row;
+		flex-wrap:wrap;
+		justify-content:space-around;
+		align-items:stretch;
+		margin:5px;
+		width:600px;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	
+	.child {
+		width:100px;
+		height:100px;
+		margin:5px;
 	}
 </style>
-<script>
-$(function () {
-	$('[data-toggle="tooltip"]').tooltip();
-});
-</script>
 </head>
 <body>
-<p class="away" data-toggle="tooltip" data-placement="top" title="Fuck you bullshit!">Hover me if you can!</p>
+<div class="container border">
+	<div class="row">
+		<div class="app">
+			<div class="app-front border">Front</div>
+			<div class="app-back border">Back</div>
+			<div class="app-left border">Left</div>
+			<div class="app-right border">Right</div>
+			<div class="app-top border" style="height:100px;">Top</div>
+			<div class="app-bottom border" style="top:20px;height:100px;">Bottom</div>
+		</div>
+	</div>
 </body>
 </html>
