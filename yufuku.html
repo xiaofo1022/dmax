@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Yufuku</title>
+<link href="css/perfect-scrollbar.css" rel="stylesheet"/>
+<script src="js/perfect-scrollbar.js"></script>
+<style>
+@font-face {
+	font-family:"bige-young-2";
+	src:url(fonts/bige-young-2.ttf);
+}
+
+* {
+	padding:0;
+	margin:0;
+}
+
+html, body {
+	width:100%;
+	height:100%;
+	overflow:hidden;
+}
+
+.test-border {
+	border:1px solid #E6E6E6;
+	border-width:0px 1px 0px 0px;
+}
+
+.left-side {
+	position:relative;
+	display:inline-block;
+	width:60px;
+	height:100%;
+	border-right:1px solid #E6E6E6;
+}
+
+.left-side .search {
+	width:100%;
+	height:60px;
+	border-bottom:1px solid #E6E6E6;
+	background-image:url(images/search.png);
+	background-position:center center;
+	background-repeat:no-repeat;
+}
+
+.left-side a.menu-button {
+	display:block;
+	width:100%;
+	height:60px;
+	position:absolute;
+	top:50%;
+	margin-top:-30px;
+	padding-left:22px;
+	padding-top:22px;
+	box-sizing:border-box;
+}
+
+.left-side a.menu-button span {
+	display:block;
+	width:16px;
+	height:2px;
+	background-color:#E22D20;
+	margin-bottom:3px;
+}
+
+.left-side .label {
+	position:absolute;
+	bottom:100px;
+	text-transform:uppercase;
+	font-size:14px;
+	color:#777;
+	width:100%;
+	text-align:center;
+	letter-spacing:3px;
+	transform:rotate(-90deg);
+}
+
+.left-side .logo {
+	position:absolute;
+	bottom:10px;
+	font-family:"bige-young-2";
+	font-size:18px;
+	color:#E22D20;
+	width:100%;
+	text-align:center;
+	letter-spacing:3px;
+}
+
+.left-side .logo span {
+	display:block;
+	font-family:Helvetica;
+	font-size:12px;
+	letter-spacing:0;
+	text-transform:uppercase;
+	transform:scale(.7);
+}
+
+.index-galley {
+	position:absolute;
+	left:60px;
+	top:0;
+	bottom:0;
+	right:0;
+	display:flex;
+	overflow-x:hidden;
+	overflow-y:hidden;
+}
+
+.index-galley .img-block {
+	min-width:360px;
+}
+
+.index-galley img {
+	width:360px;
+}
+</style>
+</head>
+<body>
+<div class="left-side">
+	<div class="search"></div>
+	<a class="menu-button">
+		<span></span>
+		<span></span>
+		<span></span>
+	</a>
+	<div class="label">Artists</div>
+	<div class="logo">
+		西福
+		<span>Yufuku</span>
+	</div>
+</div>
+
+<div class="index-galley">
+	<div class="img-block">
+		<img src="images/yufuku/Mihara_index11.jpg"/>
+	</div>
+	<div class="img-block">
+		<img src="images/yufuku/nagae_index.jpg"/>
+	</div>
+	<div class="img-block">
+		<img src="images/yufuku/Takeyama_index11.jpg"/>
+	</div>
+	<div class="img-block">
+		<img src="images/yufuku/Ikuta_index1.jpg"/>
+	</div>
+	<div class="img-block">
+		<img src="images/yufuku/Tanaka_index1.jpg"/>
+	</div>
+	<div class="img-block">
+		<img src="images/yufuku/Fukami_index1.jpg"/>
+	</div>
+	<div class="img-block">
+		<img src="images/yufuku/Maeta_index11.jpg"/>
+	</div>
+	<div class="img-block">
+		<img src="images/yufuku/Takagaki_index11.jpg"/>
+	</div>
+	<div class="img-block">
+		<img src="images/yufuku/Kimura_index21.jpg"/>
+	</div>
+	<div class="img-block">
+		<img src="images/yufuku/Nakashima_index11.jpg"/>
+	</div>
+</div>
+
+<script>
+	var $ = document.querySelector.bind(document);
+	window.onload = function () {
+		Ps.initialize($('.index-galley'), {useBothWheelAxes: true});
+	};
+</script>
+</body>
+</html>
