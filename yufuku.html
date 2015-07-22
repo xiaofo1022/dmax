@@ -66,23 +66,104 @@ body {
 	box-sizing:border-box;
 }
 
-.left-side a.menu-button .button-block {
-	position:absolute;
-	width:16px;
-	height:16px;
-	top:50%;
-	left:50%;
-	margin-left:-8px;
-	margin-top:-8px;
-}
-
 .left-side a.menu-button:hover {
 	cursor:pointer;
 }
 
-@-webkit-keyframes menu-ani {
-	from { transform:scale(1, 1); }
-	to { transform:scale(0, 1); }
+.left-side a.menu-button:hover .button-block {
+	transform:rotate(90deg);
+}
+
+.left-side a.menu-button .button-block {
+	position:absolute;
+	width:16px;
+	height:12px;
+	top:50%;
+	left:50%;
+	margin-left:-8px;
+	margin-top:-8px;
+	transition:transform .4s;
+}
+
+@-webkit-keyframes menu-ani-top {
+	0% {
+		transform-origin:right center;
+		transform:scale(1, 1);
+	}
+	40% {
+		transform-origin:right center;
+		transform:scale(1, 1);
+	}
+	
+	45% {
+		transform-origin:right center;
+		transform:scale(0, 1);
+	}
+	55% {
+		transform-origin:left center;
+		transform:scale(0, 1);
+	}
+	
+	60% {
+		transform-origin:left center;
+		transform:scale(1, 1);
+	}
+	100% {
+		transform-origin:left center;
+		transform:scale(1, 1);
+	}
+}
+
+@-webkit-keyframes menu-ani-middle {
+	0% {
+		transform:scale(1, 1);
+	}
+	40% {
+		transform:scale(1, 1);
+	}
+	
+	45% {
+		transform:scale(0, 1);
+	}
+	55% {
+		transform:scale(0, 1);
+	}
+	
+	60% {
+		transform:scale(1, 1);
+	}
+	100% {
+		transform:scale(1, 1);
+	}
+}
+
+@-webkit-keyframes menu-ani-right {
+	0% {
+		transform-origin:left center;
+		transform:scale(1, 1);
+	}
+	40% {
+		transform-origin:left center;
+		transform:scale(1, 1);
+	}
+	
+	45% {
+		transform-origin:left center;
+		transform:scale(0, 1);
+	}
+	55% {
+		transform-origin:right center;
+		transform:scale(0, 1);
+	}
+	
+	60% {
+		transform-origin:right center;
+		transform:scale(1, 1);
+	}
+	100% {
+		transform-origin:right center;
+		transform:scale(1, 1);
+	}
 }
 
 .left-side a.menu-button span {
@@ -92,30 +173,27 @@ body {
 	height:2px;
 	background-color:#E22D20;
 	
-	animation-name:menu-ani;
-	animation-duration: .3s;
-	animation-delay: 1s;
+	animation-duration: 4s;
 	animation-timing-function: linear;
-	animation-iteration-count: 1;
-	animation-direction: alternate;
-	animation-fill-mode: both;
+	animation-iteration-count: infinite;
 }
 
 .left-side a.menu-button span:nth-child(1) {
 	left:0;
 	top:0;
-	transform-origin:right center;
+	animation-name:menu-ani-top;
 }
 
 .left-side a.menu-button span:nth-child(2) {
 	left:0;
-	top:7px;
+	top:5px;
+	animation-name:menu-ani-middle;
 }
 
 .left-side a.menu-button span:nth-child(3) {
 	left:0;
-	top:14px;
-	transform-origin:left center;
+	top:10px;
+	animation-name:menu-ani-right;
 }
 
 .left-side .label {
@@ -238,7 +316,7 @@ body {
 	<div class="left-side">
 		<div class="search"></div>
 		<a class="menu-button" onclick="showMenuPage()">
-			<div class="button-block">
+			<div class="button-block menu-ani">
 				<span></span>
 				<span></span>
 				<span></span>
@@ -314,5 +392,9 @@ body {
 		$(".left-page").css("left", "0px");
 		$(".right-page").css("right", "0px");
 	}
+	
+	$(".menu-ani").bind("webkitAnimationEnd", function(e) {
+		console.log("end");
+	});
 </script>
 </html>
