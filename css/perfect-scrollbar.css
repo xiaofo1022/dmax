@@ -7,10 +7,10 @@
   .ps-container.ps-in-scrolling {
     pointer-events: none; }
     .ps-container.ps-in-scrolling.ps-x > .ps-scrollbar-x-rail {
-      background-color: #eee;
+      background-color: #333;
       opacity: 0.9; }
       .ps-container.ps-in-scrolling.ps-x > .ps-scrollbar-x-rail > .ps-scrollbar-x {
-        background-color: #999; }
+        background-color: #E22D20; }
     .ps-container.ps-in-scrolling.ps-y > .ps-scrollbar-y-rail {
       background-color: #eee;
       opacity: 0.9; }
@@ -20,26 +20,26 @@
     display: none;
     position: absolute;
     /* please don't change 'position' */
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -ms-border-radius: 4px;
-    border-radius: 4px;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    -ms-border-radius: 1px;
+    border-radius: 1px;
     opacity: 0;
     -webkit-transition: background-color .2s linear, opacity .2s linear;
     -moz-transition: background-color .2s linear, opacity .2s linear;
     -o-transition: background-color .2s linear, opacity .2s linear;
     transition: background-color .2s linear, opacity .2s linear;
-    bottom: 3px;
+    bottom: 0px;
     /* there must be 'bottom' for ps-scrollbar-x-rail */
     height: 8px; }
     .ps-container > .ps-scrollbar-x-rail > .ps-scrollbar-x {
       position: absolute;
       /* please don't change 'position' */
-      background-color: #aaa;
-      -webkit-border-radius: 4px;
-      -moz-border-radius: 4px;
-      -ms-border-radius: 4px;
-      border-radius: 4px;
+      background-color: #E22D20;
+      -webkit-border-radius: 1px;
+      -moz-border-radius: 1px;
+      -ms-border-radius: 1px;
+      border-radius: 1px;
       -webkit-transition: background-color .2s linear;
       -moz-transition: background-color .2s linear;
       -o-transition: background-color .2s linear;
@@ -51,10 +51,10 @@
     display: none;
     position: absolute;
     /* please don't change 'position' */
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -ms-border-radius: 4px;
-    border-radius: 4px;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    -ms-border-radius: 1px;
+    border-radius: 1px;
     opacity: 0;
     -webkit-transition: background-color .2s linear, opacity .2s linear;
     -moz-transition: background-color .2s linear, opacity .2s linear;
@@ -67,10 +67,10 @@
       position: absolute;
       /* please don't change 'position' */
       background-color: #aaa;
-      -webkit-border-radius: 4px;
-      -moz-border-radius: 4px;
-      -ms-border-radius: 4px;
-      border-radius: 4px;
+      -webkit-border-radius: 1px;
+      -moz-border-radius: 1px;
+      -ms-border-radius: 1px;
+      border-radius: 1px;
       -webkit-transition: background-color .2s linear;
       -moz-transition: background-color .2s linear;
       -o-transition: background-color .2s linear;
@@ -81,22 +81,22 @@
   .ps-container:hover.ps-in-scrolling {
     pointer-events: none; }
     .ps-container:hover.ps-in-scrolling.ps-x > .ps-scrollbar-x-rail {
-      background-color: #eee;
+      background-color: #333;
       opacity: 0.9; }
       .ps-container:hover.ps-in-scrolling.ps-x > .ps-scrollbar-x-rail > .ps-scrollbar-x {
-        background-color: #999; }
+        background-color: #E22D20; }
     .ps-container:hover.ps-in-scrolling.ps-y > .ps-scrollbar-y-rail {
       background-color: #eee;
       opacity: 0.9; }
       .ps-container:hover.ps-in-scrolling.ps-y > .ps-scrollbar-y-rail > .ps-scrollbar-y {
         background-color: #999; }
   .ps-container:hover > .ps-scrollbar-x-rail, .ps-container:hover > .ps-scrollbar-y-rail {
-    opacity: 0.6; }
+    opacity: 0.9; }
   .ps-container:hover > .ps-scrollbar-x-rail:hover {
-    background-color: #eee;
+    background-color: #333;
     opacity: 0.9; }
     .ps-container:hover > .ps-scrollbar-x-rail:hover > .ps-scrollbar-x {
-      background-color: #999; }
+      background-color: #E22D20; }
   .ps-container:hover > .ps-scrollbar-y-rail:hover {
     background-color: #eee;
     opacity: 0.9; }

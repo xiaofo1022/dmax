@@ -22,9 +22,21 @@ html, body {
 	overflow:hidden;
 }
 
+body {
+	position:relative;
+}
+
 .test-border {
 	border:1px solid #E6E6E6;
 	border-width:0px 1px 0px 0px;
+}
+
+.index-page {
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
 }
 
 .left-side {
@@ -51,17 +63,59 @@ html, body {
 	position:absolute;
 	top:50%;
 	margin-top:-30px;
-	padding-left:22px;
-	padding-top:22px;
 	box-sizing:border-box;
+}
+
+.left-side a.menu-button .button-block {
+	position:absolute;
+	width:16px;
+	height:16px;
+	top:50%;
+	left:50%;
+	margin-left:-8px;
+	margin-top:-8px;
+}
+
+.left-side a.menu-button:hover {
+	cursor:pointer;
+}
+
+@-webkit-keyframes menu-ani {
+	from { transform:scale(1, 1); }
+	to { transform:scale(0, 1); }
 }
 
 .left-side a.menu-button span {
 	display:block;
+	position:absolute;
 	width:16px;
 	height:2px;
 	background-color:#E22D20;
-	margin-bottom:3px;
+	
+	animation-name:menu-ani;
+	animation-duration: .3s;
+	animation-delay: 1s;
+	animation-timing-function: linear;
+	animation-iteration-count: 1;
+	animation-direction: alternate;
+	animation-fill-mode: both;
+}
+
+.left-side a.menu-button span:nth-child(1) {
+	left:0;
+	top:0;
+	transform-origin:right center;
+}
+
+.left-side a.menu-button span:nth-child(2) {
+	left:0;
+	top:7px;
+}
+
+.left-side a.menu-button span:nth-child(3) {
+	left:0;
+	top:14px;
+	transform-origin:left center;
 }
 
 .left-side .label {
@@ -108,67 +162,157 @@ html, body {
 }
 
 .index-galley .img-block {
+	position:relative;
 	min-width:360px;
 }
 
 .index-galley img {
+	position:absolute;
+	top:0;
+	left:0;
 	width:360px;
+	transform:scale(1);
+	transition:transform 8s;
+}
+
+.index-galley .artist-tip {
+	position:absolute;
+	top:50%;
+	width:100%;
+	text-align:center;
+	color:#fff;
+	font-size:26px;
+	font-weight:500;
+	opacity:0;
+	-webkit-filter:blur(1rem);
+	transition:all 2s;
+}
+
+.index-galley .img-block:hover {
+	cursor:pointer;
+}
+
+.index-galley .img-block:hover .artist-tip {
+	opacity:1;
+	-webkit-filter:blur(0rem);
+}
+
+.index-galley .img-block:hover img {
+	transform:scale(1.1);
+}
+
+.menu-page {
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	z-index:-1;
+}
+
+.menu-page .left-page {
+	position:absolute;
+	left:-50%;
+	width:50%;
+	height:100%;
+	background-color:#fff;
+	transition:left 1s;
+}
+
+.menu-page .right-page {
+	position:absolute;
+	right:-50%;
+	width:50%;
+	height:100%;
+	background-color:#000;
+	transition:right 1s;
+}
+
+.hidden {
+	display:none;
 }
 </style>
 </head>
 <body>
-<div class="left-side">
-	<div class="search"></div>
-	<a class="menu-button">
-		<span></span>
-		<span></span>
-		<span></span>
-	</a>
-	<div class="label">Artists</div>
-	<div class="logo">
-		西福
-		<span>Yufuku</span>
+<div class="index-page">
+	<div class="left-side">
+		<div class="search"></div>
+		<a class="menu-button" onclick="showMenuPage()">
+			<div class="button-block">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</a>
+		<div class="label">Artists</div>
+		<div class="logo">
+			西福
+			<span>Yufuku</span>
+		</div>
+	</div>
+
+	<div class="index-galley">
+		<div class="img-block">
+			<img src="images/yufuku/Mihara_index11.jpg"/>
+			<div class="artist-tip">
+				Kurt Cobain
+			</div>
+		</div>
+		<div class="img-block">
+			<img src="images/yufuku/nagae_index.jpg"/>
+			<div class="artist-tip">
+				Chris Novoselic
+			</div>
+		</div>
+		<div class="img-block">
+			<img src="images/yufuku/Takeyama_index11.jpg"/>
+			<div class="artist-tip">
+				Dave Grohl
+			</div>
+		</div>
+		<div class="img-block">
+			<img src="images/yufuku/Ikuta_index1.jpg"/>
+			<div class="artist-tip">
+				Pat Smear
+			</div>
+		</div>
+		<div class="img-block">
+			<img src="images/yufuku/Tanaka_index1.jpg"/>
+		</div>
+		<div class="img-block">
+			<img src="images/yufuku/Fukami_index1.jpg"/>
+		</div>
+		<div class="img-block">
+			<img src="images/yufuku/Maeta_index11.jpg"/>
+		</div>
+		<div class="img-block">
+			<img src="images/yufuku/Takagaki_index11.jpg"/>
+		</div>
+		<div class="img-block">
+			<img src="images/yufuku/Kimura_index21.jpg"/>
+		</div>
+		<div class="img-block">
+			<img src="images/yufuku/Nakashima_index11.jpg"/>
+		</div>
 	</div>
 </div>
 
-<div class="index-galley">
-	<div class="img-block">
-		<img src="images/yufuku/Mihara_index11.jpg"/>
-	</div>
-	<div class="img-block">
-		<img src="images/yufuku/nagae_index.jpg"/>
-	</div>
-	<div class="img-block">
-		<img src="images/yufuku/Takeyama_index11.jpg"/>
-	</div>
-	<div class="img-block">
-		<img src="images/yufuku/Ikuta_index1.jpg"/>
-	</div>
-	<div class="img-block">
-		<img src="images/yufuku/Tanaka_index1.jpg"/>
-	</div>
-	<div class="img-block">
-		<img src="images/yufuku/Fukami_index1.jpg"/>
-	</div>
-	<div class="img-block">
-		<img src="images/yufuku/Maeta_index11.jpg"/>
-	</div>
-	<div class="img-block">
-		<img src="images/yufuku/Takagaki_index11.jpg"/>
-	</div>
-	<div class="img-block">
-		<img src="images/yufuku/Kimura_index21.jpg"/>
-	</div>
-	<div class="img-block">
-		<img src="images/yufuku/Nakashima_index11.jpg"/>
-	</div>
+<div class="menu-page">
+	<div class="left-page"></div>
+	<div class="right-page"></div>
 </div>
-
-<script>
-	var $ = document.querySelector.bind(document);
-	window.onload = function () {
-		Ps.initialize($('.index-galley'), {useBothWheelAxes: true});
-	};
-</script>
 </body>
+<script src="js/jquery.js"></script>
+<script>
+	var $query = document.querySelector.bind(document);
+	window.onload = function () {
+		Ps.initialize($query('.index-galley'), {useBothWheelAxes: true});
+	};
+	
+	function showMenuPage() {
+		$(".menu-page").css("z-index", "1");
+		$(".left-page").css("left", "0px");
+		$(".right-page").css("right", "0px");
+	}
+</script>
 </html>
