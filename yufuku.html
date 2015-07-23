@@ -210,7 +210,7 @@ body {
 	transform:rotate(-90deg);
 }
 
-.left-side .logo {
+.logo {
 	position:absolute;
 	bottom:10px;
 	font-family:"bige-young-2";
@@ -221,7 +221,7 @@ body {
 	letter-spacing:3px;
 }
 
-.left-side .logo span {
+.logo span {
 	display:block;
 	font-family:Helvetica;
 	font-size:12px;
@@ -308,10 +308,15 @@ body {
 	transition:right 1s;
 }
 
+.menu-page .right-page .page {
+	width:100%;
+	height:100%;
+}
+
 .menu-page .left-page .close-button {
 	position:absolute;
-	left:20px;
-	top:50%;
+	left:-45px;
+	top:14px;
 }
 
 .menu-page .left-page .close-button:hover {
@@ -346,6 +351,7 @@ body {
 
 .menu-page .right-page .art-info p:nth-child(1) {
 	font-weight:500;
+	transition-delay:1s;
 }
 
 .menu-page .right-page .art-info p:nth-child(2) {
@@ -363,7 +369,65 @@ body {
 
 .menu-page .right-page .art-info p:nth-child(3) {
 	font-weight:500;
-	transition-delay:2s;
+	transition-delay:1.3s;
+}
+
+.menu-page .menu {
+	display:inline-block;
+	position:absolute;
+	left:60px;
+	bottom:60px;
+}
+
+.menu-page .menu ul {
+	letter-spacing:4px;
+	font-weight:normal;
+	font-size:12px;
+	list-style-type:none;
+	text-transform:uppercase;
+}
+
+.menu-page .menu ul li {
+	line-height:32px;
+	transition-timing-function:linear;
+	transition:color .2s;
+}
+
+.menu-page .menu ul li:hover {
+	cursor:pointer;
+	color:#E22D20;
+}
+
+.menu-page .menu ul li:hover:before {
+	width:20px;
+}
+
+.menu-page .menu ul li:before {
+	display:inline-block;
+	width:0px;
+	height:1px;
+	background-color:#E22D20;
+	margin-right:8px;
+	margin-bottom:4px;
+	content:"";
+	transition-timing-function:linear;
+	transition:width .2s;
+}
+
+.menu-page .left-page .scroll-ul {
+	position:absolute;
+	right:10px;
+	bottom:10px;
+	list-style-type:disc;
+	color:#E22D20;
+}
+
+.z-show {
+	z-index:1;
+}
+
+.z-hide {
+	z-index:-1;
 }
 
 .hidden {
@@ -437,14 +501,33 @@ body {
 
 <div class="menu-page">
 	<div class="left-page">
-		<img class="close-button" src="images/yufuku/close_button.png" onclick="closeMenuPage()"/>
+		<div class="menu">
+			<img class="close-button" src="images/yufuku/close_button.png" onclick="closeMenuPage()"/>
+			<div class="logo" style="position:relative;top:0;text-align:left;font-size:42px;margin-bottom:20px;">
+				西福
+				<span style="font-size:20px;transform:scale(1,1);margin-left:2px;">Yufuku</span>
+			</div>
+			<ul>
+				<li>Aritists</li>
+				<li>Exhibitions</li>
+				<li>Art Fairs</li>
+				<li>About Us</li>
+			</ul>
+		</div>
+		<ul class="scroll-ul">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
 	</div>
 	<div class="right-page">
-		<img class="show-image" src="images/yufuku/fujikake-2015-recommend1.jpg"/>
-		<div class="art-info">
-			<p>Exhibition</p>
-			<p data-blurtip="New Glass Works by Sachi Fujikake" onclick="why()"></p>
-			<p>Thu, 3rd Sep - Sat, 12th Sep, 2015</p>
+		<div class="page z-show">
+			<img class="show-image" src="images/yufuku/fujikake-2015-recommend1.jpg"/>
+			<div class="art-info">
+				<p>Exhibition</p>
+				<p data-blurtip="New Glass Works by Sachi Fujikake" onclick="why()"></p>
+				<p>Thu, 3rd Sep - Sat, 12th Sep, 2015</p>
+			</div>
 		</div>
 	</div>
 </div>
@@ -460,6 +543,7 @@ body {
 		$(".menu-page").css("z-index", "1");
 		$(".left-page").css("left", "0px");
 		$(".right-page").css("right", "0px");
+		showPageBlurEffect();
 	}
 	
 	function closeMenuPage() {
@@ -473,24 +557,36 @@ body {
 		}
 	});
 	
-	$(".right-page").bind("webkitTransitionEnd", function(e) {
-		if ($(this).css("right") == "0px") {
-			createBlurTip();
-			var firstp = $(".art-info p")[0];
-			firstp = $(firstp);
-			firstp.css("opacity", "1");
-			firstp.css("-webkit-filter", "blur(0rem)");
-			firstp.bind("webkitTransitionEnd", function(e) {
+	function showPageBlurEffect() {
+		createBlurTip();
+		var artps = $(".page.z-show .art-info p");
+		var firstp = $(artps[0]);
+		var lastp = $(artps[2]);
+		firstp.css("opacity", "1");
+		firstp.css("-webkit-filter", "blur(0rem)");
+		firstp.bind("webkitTransitionEnd", function(e) {
+			if ($(this).css("opacity") == "1") {
 				showBlurTip();
-			});
-			var lastp = $($(".art-info p")[2]);
-			lastp.css("opacity", "1");
-			lastp.css("-webkit-filter", "blur(0rem)");
-		}
-	});
+				lastp.css("opacity", "1");
+				lastp.css("-webkit-filter", "blur(0rem)");
+			}
+		});
+		setTimeout(hidePageBlurEffect, 8000);
+	}
+	
+	function hidePageBlurEffect() {
+		var artps = $(".page.z-show .art-info p");
+		var firstp = $(artps[0]);
+		firstp.css("opacity", "0");
+		firstp.css("-webkit-filter", "blur(1rem)");
+		hideBlurTip();
+		var lastp = $(artps[2]);
+		lastp.css("opacity", "0");
+		lastp.css("-webkit-filter", "blur(1rem)");
+	}
 	
 	function createBlurTip() {
-		var blurp = $("[data-blurtip]");
+		var blurp = $(".page.z-show p[data-blurtip]");
 		if (blurp.html() == "") {
 			var tip = blurp.data("blurtip");
 			for (var i in tip) {
@@ -501,10 +597,24 @@ body {
 		}
 	}
 	
+	function removeBlurTip() {
+		var blurp = $(".page.z-show p[data-blurtip]");
+		if (blurp.html() != "") {
+			blurp.html("");
+		}
+	}
+	
 	function showBlurTip() {
-		$("[data-blurtip] span").each(function(i, element) {
+		$(".page.z-show [data-blurtip] span").each(function(i, element) {
 			$(element).css("opacity", "1");
 			$(element).css("-webkit-filter", "blur(0rem)");
+		});
+	}
+	
+	function hideBlurTip() {
+		$(".page.z-show [data-blurtip] span").each(function(i, element) {
+			$(element).css("opacity", "0");
+			$(element).css("-webkit-filter", "blur(1rem)");
 		});
 	}
 </script>
