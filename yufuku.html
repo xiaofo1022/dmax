@@ -304,13 +304,18 @@ body {
 	right:-50%;
 	width:50%;
 	height:100%;
-	background-color:#000;
+	background-color:#333;
 	transition:right 1s;
+	perspective:1400px;
 }
 
 .menu-page .right-page .page {
+	position:absolute;
+	top:0;
+	left:0;
 	width:100%;
 	height:100%;
+	transition:all 1s;
 }
 
 .menu-page .left-page .close-button {
@@ -419,6 +424,15 @@ body {
 	right:10px;
 	bottom:10px;
 	list-style-type:disc;
+	color:#CCC;
+}
+
+.menu-page .left-page .scroll-ul li:hover {
+	cursor:pointer;
+	color:#E22D20;
+}
+
+.menu-page .left-page .scroll-ul .active-li {
 	color:#E22D20;
 }
 
@@ -427,11 +441,29 @@ body {
 }
 
 .z-hide {
-	z-index:-1;
+	z-index:-99;
+}
+
+.active {
+	visibility:visible;
+}
+
+.inactive {
+	visibility:hidden;
 }
 
 .hidden {
 	display:none;
+}
+
+@-webkit-keyframes page-slide-top {
+	from { transform:translateY(100%); }
+}
+
+.page-slide-top {
+	animation-name:page-slide-top;
+	animation-duration:1s;
+	animation-iteration-count:1;
 }
 </style>
 </head>
@@ -515,18 +547,26 @@ body {
 			</ul>
 		</div>
 		<ul class="scroll-ul">
-			<li></li>
-			<li></li>
+			<li class="active-li" onclick="changePageView(this)"></li>
+			<li onclick="changePageView(this)"></li>
 			<li></li>
 		</ul>
 	</div>
 	<div class="right-page">
-		<div class="page z-show">
+		<div id="page-1" class="page active">
 			<img class="show-image" src="images/yufuku/fujikake-2015-recommend1.jpg"/>
 			<div class="art-info">
 				<p>Exhibition</p>
-				<p data-blurtip="New Glass Works by Sachi Fujikake" onclick="why()"></p>
+				<p data-blurtip="New Glass Works by Sachi Fujikake"></p>
 				<p>Thu, 3rd Sep - Sat, 12th Sep, 2015</p>
+			</div>
+		</div>
+		<div id="page-2" class="page inactive">
+			<img class="show-image" src="images/yufuku/201507news-tsukiyama1.jpg"/>
+			<div class="art-info">
+				<p>News</p>
+				<p data-blurtip="Yufuku Gallery Permanent Collection"></p>
+				<p>Thu, 2rd Sep - Sat, 3th Sep, 2014</p>
 			</div>
 		</div>
 	</div>
@@ -559,23 +599,32 @@ body {
 	
 	function showPageBlurEffect() {
 		createBlurTip();
-		var artps = $(".page.z-show .art-info p");
+		var artps = $(".page.active .art-info p");
 		var firstp = $(artps[0]);
-		var lastp = $(artps[2]);
 		firstp.css("opacity", "1");
 		firstp.css("-webkit-filter", "blur(0rem)");
-		firstp.bind("webkitTransitionEnd", function(e) {
-			if ($(this).css("opacity") == "1") {
-				showBlurTip();
-				lastp.css("opacity", "1");
-				lastp.css("-webkit-filter", "blur(0rem)");
-			}
-		});
-		setTimeout(hidePageBlurEffect, 8000);
+		firstp.bind("webkitTransitionEnd", showPageTransitionEnd);
+	}
+	
+	function showPageTransitionEnd(e) {
+		if ($(this).css("opacity") == "1") {
+			showBlurTip();
+			var artps = $(".page.active .art-info p");
+			var lastp = $(artps[2]);
+			lastp.css("opacity", "1");
+			lastp.css("-webkit-filter", "blur(0rem)");
+			$(this).unbind("webkitTransitionEnd", showPageTransitionEnd);
+		}
+	}
+	
+	function changePageView(element) {
+		$(".active-li").removeClass("active-li");
+		$(element).addClass("active-li");
+		hidePageBlurEffect();
 	}
 	
 	function hidePageBlurEffect() {
-		var artps = $(".page.z-show .art-info p");
+		var artps = $(".page.active .art-info p");
 		var firstp = $(artps[0]);
 		firstp.css("opacity", "0");
 		firstp.css("-webkit-filter", "blur(1rem)");
@@ -583,10 +632,38 @@ body {
 		var lastp = $(artps[2]);
 		lastp.css("opacity", "0");
 		lastp.css("-webkit-filter", "blur(1rem)");
+		lastp.bind("webkitTransitionEnd", hidePageTransitionEnd);
+	}
+	
+	function hidePageTransitionEnd(e) {
+		if ($(this).css("opacity") == "0") {
+			$(this).unbind("webkitTransitionEnd", hidePageTransitionEnd);
+			rollPage();
+		}
+	}
+	
+	function rollPage() {
+		removeBlurTip();
+		
+		var showPage = $(".page.active");
+		var hidePage = $(".page.inactive");
+		
+		showPage.css("transform", "translateZ(-200px)");
+		showPage.removeClass("active");
+		showPage.addClass("inactive");
+		
+		hidePage.removeClass("inactive");
+		hidePage.addClass("active");
+		hidePage.addClass("page-slide-top");
+		hidePage.bind("webkitAnimationEnd", function(e) {
+			$(this).removeClass("page-slide-top");
+			showPage.css("transform", "translateZ(0px)");
+			showPageBlurEffect();
+		});
 	}
 	
 	function createBlurTip() {
-		var blurp = $(".page.z-show p[data-blurtip]");
+		var blurp = $(".page.active p[data-blurtip]");
 		if (blurp.html() == "") {
 			var tip = blurp.data("blurtip");
 			for (var i in tip) {
@@ -598,21 +675,21 @@ body {
 	}
 	
 	function removeBlurTip() {
-		var blurp = $(".page.z-show p[data-blurtip]");
+		var blurp = $(".page.active p[data-blurtip]");
 		if (blurp.html() != "") {
 			blurp.html("");
 		}
 	}
 	
 	function showBlurTip() {
-		$(".page.z-show [data-blurtip] span").each(function(i, element) {
+		$(".page.active [data-blurtip] span").each(function(i, element) {
 			$(element).css("opacity", "1");
 			$(element).css("-webkit-filter", "blur(0rem)");
 		});
 	}
 	
 	function hideBlurTip() {
-		$(".page.z-show [data-blurtip] span").each(function(i, element) {
+		$(".page.active [data-blurtip] span").each(function(i, element) {
 			$(element).css("opacity", "0");
 			$(element).css("-webkit-filter", "blur(1rem)");
 		});
