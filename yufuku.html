@@ -319,6 +319,14 @@ body {
 	transition:transform 1s;
 }
 
+.menu-page .right-page .page:hover {
+	cursor:pointer;
+}
+
+.menu-page .right-page .page:hover .show-image-outer:before {
+	opacity:0.4;
+}
+
 .menu-page .left-page .close-button {
 	position:absolute;
 	left:-45px;
@@ -333,7 +341,6 @@ body {
 	position:relative;
 	width:100%;
 	height:100%;
-	transform:perspective(500px);
 	z-index:-1;
 }
 
@@ -344,6 +351,20 @@ body {
 	width:100%;
 	height:100%;
 	object-fit:cover;
+}
+
+.menu-page .right-page .show-image-outer:before {
+	position:absolute;
+	left:0;
+	top:0;
+	display:block;
+	width:100%;
+	height:100%;
+	background-color:#000;
+	opacity:0;
+	transition:opacity 1s;
+	content:"";
+	z-index:1;
 }
 
 .menu-page .right-page .art-info {
@@ -485,7 +506,8 @@ body {
 }
 
 @-webkit-keyframes image-translate {
-	to { transform:translateZ(200px); }
+	from { transform:perspective(500px) translateZ(0px); }
+	to { transform:perspective(500px) translateZ(100px); }
 }
 
 .page-slide-top {
@@ -582,9 +604,9 @@ body {
 			</ul>
 		</div>
 		<div class="scroll">
-			<a class="active" onclick="changePageView(this, 1)"></a>
-			<a onclick="changePageView(this, 2)"></a>
-			<a onclick="changePageView(this, 3)"></a>
+			<a id="page-link-1" class="active" onclick="changePageView(1)"></a>
+			<a id="page-link-2" onclick="changePageView(2)"></a>
+			<a id="page-link-3" onclick="changePageView(3)"></a>
 		</div>
 	</div>
 	<div class="right-page">
@@ -628,11 +650,14 @@ body {
 		Ps.initialize($query('.index-galley'), {useBothWheelAxes: true});
 	};
 	
+	var timeoutId;
+	
 	function showMenuPage() {
 		$(".menu-page").css("z-index", "1");
 		$(".left-page").css("left", "0px");
 		$(".right-page").css("right", "0px");
 		showPageBlurEffect();
+		timeoutId = setTimeout(autoRollPage, 5000);
 	}
 	
 	function closeMenuPage() {
@@ -653,7 +678,8 @@ body {
 		firstp.css("opacity", "1");
 		firstp.css("-webkit-filter", "blur(0rem)");
 		firstp.bind("webkitTransitionEnd", showPageTransitionEnd);
-		$(".page.active").find(".show-image-outer").addClass("image-translate");
+		var showimage = $(".page.active").find(".show-image-outer");
+		showimage.addClass("image-translate");
 	}
 	
 	function showPageTransitionEnd(e) {
@@ -670,17 +696,24 @@ body {
 	}
 	
 	function autoRollPage() {
-		
+		var nextIndex = pageIndex + 1;
+		if (nextIndex > 3) {
+			nextIndex = 1;
+		}
+		changePageView(nextIndex);
+		timeoutId = setTimeout(arguments.callee, 5000);
 	}
 	
 	var pageIndex = 1;
 	
-	function changePageView(element, index) {
+	function changePageView(index) {
 		var canRollPage = $($(".page.active p")[2]).css("opacity") == "1";
-		if (canRollPage) {
+		if (canRollPage && index != pageIndex) {
+			clearTimeout(timeoutId);
+			timeoutId = setTimeout(autoRollPage, 5000);
 			pageIndex = index;
 			$(".scroll .active").removeClass("active");
-			$(element).addClass("active");
+			$("#page-link-" + index).addClass("active");
 			hidePageBlurEffect();
 		}
 	}
@@ -714,7 +747,7 @@ body {
 		var hidePage = $("#page-" + pageIndex);
 		
 		if (hidePage.hasClass("inactive")) {
-			showPage.css("transform", "translateZ(-200px)");
+			showPage.css("transform", "perspective(500px) translateZ(-200px)");
 			showPage.removeClass("active");
 			showPage.addClass("inactive");
 			
@@ -724,8 +757,8 @@ body {
 			hidePage.addClass("page-slide-top");
 			hidePage.bind("webkitAnimationEnd", function(e) {
 				$(this).removeClass("page-slide-top");
-				//hidePage.find("img").addClass("image-translate");
-				showPage.find("img").removeClass("image-translate");
+				hidePage.find(".show-image-outer").addClass("image-translate");
+				showPage.find(".show-image-outer").removeClass("image-translate");
 				showPage.css("display", "none");
 				showPage.css("transform", "translateZ(0px)");
 				showPageBlurEffect();
