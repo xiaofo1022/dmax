@@ -265,7 +265,7 @@ body {
 	font-weight:500;
 	opacity:0;
 	-webkit-filter:blur(1rem);
-	transition:all 2s;
+	transition:-webkit-filter 2s, opacity 2s;
 }
 
 .index-galley .img-block:hover {
@@ -297,6 +297,7 @@ body {
 	height:100%;
 	background-color:#fff;
 	transition:left 1s;
+	z-index:1;
 }
 
 .menu-page .right-page {
@@ -315,7 +316,7 @@ body {
 	left:0;
 	width:100%;
 	height:100%;
-	transition:all 1s;
+	transition:transform 1s;
 }
 
 .menu-page .left-page .close-button {
@@ -326,6 +327,14 @@ body {
 
 .menu-page .left-page .close-button:hover {
 	cursor:pointer;
+}
+
+.menu-page .right-page .show-image-outer {
+	position:relative;
+	width:100%;
+	height:100%;
+	transform:perspective(500px);
+	z-index:-1;
 }
 
 .menu-page .right-page .show-image {
@@ -351,12 +360,11 @@ body {
 .menu-page .right-page .art-info p {
 	opacity:0;
 	-webkit-filter:blur(1rem);
-	transition:all 1s;
+	transition:-webkit-filter 1s, opacity 1s;
 }
 
 .menu-page .right-page .art-info p:nth-child(1) {
 	font-weight:500;
-	transition-delay:1s;
 }
 
 .menu-page .right-page .art-info p:nth-child(2) {
@@ -369,7 +377,7 @@ body {
 .menu-page .right-page .art-info p:nth-child(2) span {
 	opacity:0;
 	-webkit-filter:blur(1rem);
-	transition:all 1s;
+	transition:-webkit-filter 1s, opacity 1s;
 }
 
 .menu-page .right-page .art-info p:nth-child(3) {
@@ -419,21 +427,37 @@ body {
 	transition:width .2s;
 }
 
-.menu-page .left-page .scroll-ul {
+.menu-page .left-page .scroll {
 	position:absolute;
 	right:10px;
 	bottom:10px;
-	list-style-type:disc;
-	color:#CCC;
 }
 
-.menu-page .left-page .scroll-ul li:hover {
+.menu-page .left-page .scroll a {
+	display:block;
+}
+
+.menu-page .left-page .scroll a:hover {
 	cursor:pointer;
-	color:#E22D20;
 }
 
-.menu-page .left-page .scroll-ul .active-li {
-	color:#E22D20;
+.menu-page .left-page .scroll a:before {
+	display:block;
+	width:5px;
+	height:5px;
+	border-radius:2px;
+	background-color:#ccc;
+	content:"";
+	margin:10px;
+	transition:background-color .5s;
+}
+
+.menu-page .left-page .scroll a:hover:before {
+	background-color:#E22D20;
+}
+
+.menu-page .left-page .scroll .active:before {
+	background-color:#E22D20;
 }
 
 .z-show {
@@ -445,11 +469,11 @@ body {
 }
 
 .active {
-	visibility:visible;
+	z-index:99;
 }
 
 .inactive {
-	visibility:hidden;
+	z-index:-99;
 }
 
 .hidden {
@@ -460,10 +484,21 @@ body {
 	from { transform:translateY(100%); }
 }
 
+@-webkit-keyframes image-translate {
+	to { transform:translateZ(200px); }
+}
+
 .page-slide-top {
 	animation-name:page-slide-top;
 	animation-duration:1s;
 	animation-iteration-count:1;
+}
+
+.image-translate {
+	animation-name:image-translate;
+	animation-duration:10s;
+	animation-iteration-count:1;
+	animation-fill-mode:both;
 }
 </style>
 </head>
@@ -546,26 +581,40 @@ body {
 				<li>About Us</li>
 			</ul>
 		</div>
-		<ul class="scroll-ul">
-			<li class="active-li" onclick="changePageView(this)"></li>
-			<li onclick="changePageView(this)"></li>
-			<li></li>
-		</ul>
+		<div class="scroll">
+			<a class="active" onclick="changePageView(this, 1)"></a>
+			<a onclick="changePageView(this, 2)"></a>
+			<a onclick="changePageView(this, 3)"></a>
+		</div>
 	</div>
 	<div class="right-page">
 		<div id="page-1" class="page active">
-			<img class="show-image" src="images/yufuku/fujikake-2015-recommend1.jpg"/>
+			<div class="show-image-outer">
+				<img class="show-image" src="images/yufuku/fujikake-2015-recommend1.jpg"/>
+			</div>
 			<div class="art-info">
 				<p>Exhibition</p>
 				<p data-blurtip="New Glass Works by Sachi Fujikake"></p>
 				<p>Thu, 3rd Sep - Sat, 12th Sep, 2015</p>
 			</div>
 		</div>
-		<div id="page-2" class="page inactive">
-			<img class="show-image" src="images/yufuku/201507news-tsukiyama1.jpg"/>
+		<div id="page-2" class="page inactive" style="display:none;">
+			<div class="show-image-outer">
+				<img class="show-image" src="images/yufuku/201507news-tsukiyama1.jpg"/>
+			</div>
 			<div class="art-info">
 				<p>News</p>
 				<p data-blurtip="Yufuku Gallery Permanent Collection"></p>
+				<p>Thu, 2rd Sep - Sat, 3th Sep, 2014</p>
+			</div>
+		</div>
+		<div id="page-3" class="page inactive" style="display:none;">
+			<div class="show-image-outer">
+				<img class="show-image" src="images/yufuku/collect2015_report_top.jpg"/>
+			</div>
+			<div class="art-info">
+				<p>News</p>
+				<p data-blurtip="COLLECT 2015 - Post Show Report"></p>
 				<p>Thu, 2rd Sep - Sat, 3th Sep, 2014</p>
 			</div>
 		</div>
@@ -604,31 +653,47 @@ body {
 		firstp.css("opacity", "1");
 		firstp.css("-webkit-filter", "blur(0rem)");
 		firstp.bind("webkitTransitionEnd", showPageTransitionEnd);
+		$(".page.active").find(".show-image-outer").addClass("image-translate");
 	}
 	
 	function showPageTransitionEnd(e) {
 		if ($(this).css("opacity") == "1") {
 			showBlurTip();
+			
 			var artps = $(".page.active .art-info p");
 			var lastp = $(artps[2]);
 			lastp.css("opacity", "1");
 			lastp.css("-webkit-filter", "blur(0rem)");
+			
 			$(this).unbind("webkitTransitionEnd", showPageTransitionEnd);
 		}
 	}
 	
-	function changePageView(element) {
-		$(".active-li").removeClass("active-li");
-		$(element).addClass("active-li");
-		hidePageBlurEffect();
+	function autoRollPage() {
+		
+	}
+	
+	var pageIndex = 1;
+	
+	function changePageView(element, index) {
+		var canRollPage = $($(".page.active p")[2]).css("opacity") == "1";
+		if (canRollPage) {
+			pageIndex = index;
+			$(".scroll .active").removeClass("active");
+			$(element).addClass("active");
+			hidePageBlurEffect();
+		}
 	}
 	
 	function hidePageBlurEffect() {
 		var artps = $(".page.active .art-info p");
+		
 		var firstp = $(artps[0]);
 		firstp.css("opacity", "0");
 		firstp.css("-webkit-filter", "blur(1rem)");
+		
 		hideBlurTip();
+		
 		var lastp = $(artps[2]);
 		lastp.css("opacity", "0");
 		lastp.css("-webkit-filter", "blur(1rem)");
@@ -646,20 +711,26 @@ body {
 		removeBlurTip();
 		
 		var showPage = $(".page.active");
-		var hidePage = $(".page.inactive");
+		var hidePage = $("#page-" + pageIndex);
 		
-		showPage.css("transform", "translateZ(-200px)");
-		showPage.removeClass("active");
-		showPage.addClass("inactive");
-		
-		hidePage.removeClass("inactive");
-		hidePage.addClass("active");
-		hidePage.addClass("page-slide-top");
-		hidePage.bind("webkitAnimationEnd", function(e) {
-			$(this).removeClass("page-slide-top");
-			showPage.css("transform", "translateZ(0px)");
-			showPageBlurEffect();
-		});
+		if (hidePage.hasClass("inactive")) {
+			showPage.css("transform", "translateZ(-200px)");
+			showPage.removeClass("active");
+			showPage.addClass("inactive");
+			
+			hidePage.css("display", "block");
+			hidePage.removeClass("inactive");
+			hidePage.addClass("active");
+			hidePage.addClass("page-slide-top");
+			hidePage.bind("webkitAnimationEnd", function(e) {
+				$(this).removeClass("page-slide-top");
+				//hidePage.find("img").addClass("image-translate");
+				showPage.find("img").removeClass("image-translate");
+				showPage.css("display", "none");
+				showPage.css("transform", "translateZ(0px)");
+				showPageBlurEffect();
+			});
+		}
 	}
 	
 	function createBlurTip() {
