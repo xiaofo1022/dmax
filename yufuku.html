@@ -604,9 +604,9 @@ body {
 			</ul>
 		</div>
 		<div class="scroll">
-			<a id="page-link-1" class="active" onclick="changePageView(1)"></a>
-			<a id="page-link-2" onclick="changePageView(2)"></a>
-			<a id="page-link-3" onclick="changePageView(3)"></a>
+			<a id="page-link-1" class="active" onclick="changePageClickHandler(1)"></a>
+			<a id="page-link-2" onclick="changePageClickHandler(2)"></a>
+			<a id="page-link-3" onclick="changePageClickHandler(3)"></a>
 		</div>
 	</div>
 	<div class="right-page">
@@ -651,13 +651,14 @@ body {
 	};
 	
 	var timeoutId;
+	var rollpageInterval = 8000;
 	
 	function showMenuPage() {
 		$(".menu-page").css("z-index", "1");
 		$(".left-page").css("left", "0px");
 		$(".right-page").css("right", "0px");
 		showPageBlurEffect();
-		timeoutId = setTimeout(autoRollPage, 5000);
+		timeoutId = setTimeout(autoRollPage, rollpageInterval);
 	}
 	
 	function closeMenuPage() {
@@ -701,21 +702,30 @@ body {
 			nextIndex = 1;
 		}
 		changePageView(nextIndex);
-		timeoutId = setTimeout(arguments.callee, 5000);
+		timeoutId = setTimeout(arguments.callee, rollpageInterval);
 	}
 	
 	var pageIndex = 1;
 	
-	function changePageView(index) {
-		var canRollPage = $($(".page.active p")[2]).css("opacity") == "1";
-		if (canRollPage && index != pageIndex) {
+	function changePageClickHandler(index) {
+		if (canRollPage(index)) {
 			clearTimeout(timeoutId);
-			timeoutId = setTimeout(autoRollPage, 5000);
+			timeoutId = setTimeout(autoRollPage, rollpageInterval);
+			changePageView(index);
+		}
+	}
+	
+	function changePageView(index) {
+		if (canRollPage(index)) {
 			pageIndex = index;
 			$(".scroll .active").removeClass("active");
 			$("#page-link-" + index).addClass("active");
 			hidePageBlurEffect();
 		}
+	}
+	
+	function canRollPage(index) {
+		return ($($(".page.active p")[2]).css("opacity") == "1") && (index != pageIndex);
 	}
 	
 	function hidePageBlurEffect() {
